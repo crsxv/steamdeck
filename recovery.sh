@@ -1,13 +1,11 @@
 #!/bin/bash
 
 #Check if sudo password has been set in the Steam Deck
-if [ "$(passwd --status deck | tr -s " " | cut -d " " -f 2)" == "P" ]; then
+if [ "$(passwd --status $USER | tr -s " " | cut -d " " -f 2)" == "P" ]; then
     echo -e "\033[1m sudo password is already set\033[0m"
 else
-    echo -e "\033[1m Setting sudo password deck:deck\033[0m"
-    echo -e "deck\ndeck" | passwd deck &>/dev/null
-    echo -e "\033[1m sudo password has been set to 'deck'\033[0m"
-    echo -e "\033[1m Set your own password after finishing\033[0m"
+    echo -e "\033[1m Setting sudo password for '$USER:$HOSTNAME'\033[0m"
+    passwd
 fi
 
 #File to be checked in home directory
@@ -62,16 +60,6 @@ else
     exit 0
 fi
 
-#Ask the user if they want to change their default password
     echo ""
-    read -p "Do you want to change your password? (yes/no): " choice
-
-#Check the user's response
-if [[ "$choice" == "yes" || "$choice" == "y" ]]; then
-#Execute the passwd command
-    passwd
-else
-    echo "No changes made"
-fi
-
+    echo -e "\033[1m Process complete\033[0m"
 #Site: https://help.steampowered.com/en/faqs/view/1B71-EDF2-EB6D-2BB3
