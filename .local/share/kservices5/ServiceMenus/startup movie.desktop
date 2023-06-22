@@ -1,0 +1,25 @@
+[Desktop Entry]
+Type=Service
+ServiceTypes=KonqPopupMenu/Plugin
+MimeType=video/*;
+Actions=boot;suspend;throbber
+Icon=video-x-generic
+X-KDE-Priority=TopLevel
+X-KDE-Submenu=Set video as
+X-KDE-StartupNotify=false
+
+[Desktop Action boot]
+Icon=video-x-generic
+Name=Boot
+Exec=ln -sf %f /home/deck/.steam/root/config/uioverrides/movies/deck_startup.webm
+
+[Desktop Action suspend]
+Icon=video-x-generic
+Name=Suspend
+Exec=ln -sf %f /home/deck/.steam/root/config/uioverrides/movies/deck-suspend-animation.webm
+
+[Desktop Action throbber]
+Icon=video-x-generic
+Name=Throbber
+Exec=ln -sf %f /home/deck/.steam/root/config/uioverrides/movies/deck-suspend-animation-from-throbber.webm
+
