@@ -1,0 +1,11 @@
+#!/usr/bin/env xdg-open
+[Desktop Entry]
+Version=1.0
+Name=Screen Locker
+Comment=Lock your screen if connected to an external display
+Exec=$HOME/.scripts/lockscreen.sh
+Terminal=false
+Type=Application
+Icon=emblem-locked
+Categories=System;
+StartupNotify=false
