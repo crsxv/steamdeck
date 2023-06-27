@@ -6,10 +6,8 @@ perform_backup() {
     local destination_directory=$2
 
 # Backup everything in $HOME to...
-    #konsole --hold -e "rsync -av --progress '$source_directory' '$destination_directory'"
+    konsole --hold -e "rsync -av --progress '$source_directory' '$destination_directory'"
 
-# Backup everything in $HOME except Steam's directory to...
-    konsole --hold -e "rsync -av --progress --exclude '/home/deck/.local/share/Steam' '$source_directory' '$destination_directory'"
     echo "Sync completed."
 }
 
@@ -33,7 +31,7 @@ display_menu() {
 selected_option=$(display_menu)
 
 case "$selected_option" in
-    "Backup: HOME")
+    "Backup: HOME") # Backup everything in the Internal Storage to where you want to store the backup
         source_directory="$HOME"
         destination_directory=$(prompt_directory_selection)
 
@@ -43,8 +41,8 @@ case "$selected_option" in
             echo "No destination directory selected. Sync canceled."
         fi
         ;;
-    "Backup: SD CARD")
-        source_directory="/run/media/mmcblk0p1/steamapps/common/"
+    "Backup: SD CARD") # Backup everything in the External Storage to where you want to store the backup
+        source_directory="/run/media/mmcblk0p1/"
         destination_directory=$(prompt_directory_selection)
 
         if [[ -n "$destination_directory" ]]; then
@@ -53,7 +51,7 @@ case "$selected_option" in
             echo "No destination directory selected. Sync canceled."
         fi
         ;;
-    "Backup: CUSTOM")
+    "Backup: CUSTOM") # Choose what to backup and where to backup
         source_directory=$(prompt_directory_selection)
         destination_directory=$(prompt_directory_selection)
 
