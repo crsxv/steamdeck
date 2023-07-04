@@ -25,7 +25,7 @@ for package in "${required_packages[@]}"; do
 done
 
 # Enable back the read-only mode on SteamOS
-sudo steamos-readonly disable
+sudo steamos-readonly enable
 
 # Function to perform backup of a directory
 perform_backup() {
