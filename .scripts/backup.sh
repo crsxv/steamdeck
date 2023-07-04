@@ -1,5 +1,32 @@
 #!/bin/bash
 
+# It enables strict error handling and behavior for the script
+set -euo pipefail
+
+# Temporarily disable the read-only mode on SteamOS
+sudo steamos-readonly disable
+
+# List of required packages
+required_packages=("konsole" "rsync" "zenity")
+
+# Function to check if a package is installed and install it if missing
+install_package() {
+    local package="$1"
+    if ! pacman -Q "$package" &>/dev/null; then
+        echo "Package '$package' is not installed. Installing..."
+        sudo pacman -Sy --noconfirm "$package"
+        echo "Package '$package' installed successfully."
+    fi
+}
+
+# Loop through the required packages and install them if missing
+for package in "${required_packages[@]}"; do
+    install_package "$package"
+done
+
+# Enable back the read-only mode on SteamOS
+sudo steamos-readonly disable
+
 # Function to perform backup of a directory
 perform_backup() {
     local source_directory=$1
