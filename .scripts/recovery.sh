@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# It enables strict error handling and behavior for the script
+set -euo pipefail
+
 #Check if sudo password has been set in the Steam Deck
 if [ "$(passwd --status $USER | tr -s " " | cut -d " " -f 2)" == "P" ]; then
     echo -e "\033[1m sudo password is already set\033[0m"
