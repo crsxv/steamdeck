@@ -3,6 +3,35 @@
 # It enables strict error handling and behavior for the script
 set -euo pipefail
 
+# List of required packages
+required_packages=(
+    "wget"
+)
+
+# Function to check if a package is installed
+is_package_installed() {
+    local package="$1"
+    pacman -Q "$package" &>/dev/null
+}
+
+# Check if any of the required packages are not installed
+missing_packages=()
+for package in "${required_packages[@]}"; do
+    if ! is_package_installed "$package"; then
+        missing_packages+=("$package")
+    fi
+done
+
+# If there are missing packages, install them and disable steamos-readonly temporarily
+if [ ${#missing_packages[@]} -gt 0 ]; then
+    echo "Installing missing packages: ${missing_packages[*]}"
+    sudo steamos-readonly disable
+    sudo pacman -Sy --noconfirm "${missing_packages[@]}"
+    sudo steamos-readonly enable
+else
+    echo "Packages already installed."
+fi
+
 #Check if sudo password has been set in the Steam Deck
 if [ "$(passwd --status $USER | tr -s " " | cut -d " " -f 2)" == "P" ]; then
     echo -e "\033[1m sudo password is already set\033[0m"
@@ -66,3 +95,4 @@ fi
     echo ""
     echo -e "\033[1m Process complete\033[0m"
 #Site: https://help.steampowered.com/en/faqs/view/1B71-EDF2-EB6D-2BB3
+
